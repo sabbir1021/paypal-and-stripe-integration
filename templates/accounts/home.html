@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="row">
+
+  <div class="card col-3 mt-4">
+    <h5 class="card-header">User Information</h5>
+    <div class="card-body">
+      <h5 class="card-title"><b>Name:</b> {{ user.first_name }} {{ user.last_name }}</h5>
+      <h5 class="card-title"><b>Username:</b> {{ user.username }}</h5>
+      <h5 class="card-title"><b>Email:</b> {{ user.email }}</h5>
+      <a href="{% url 'accounts:change_password' %}" class="btn btn-primary">Change Password</a>
+    </div>
+  </div>
+
+
+<div class="card text-center mt-4 col-9">
+    <div class="card-header"> <h2> Subscription List </h2> </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Subscription Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Payment Type</th>
+                <th scope="col">Date Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pay in payment %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{pay.subscription}}</td>
+                <td>{{pay.subscription.price}}</td>
+                <td>{{pay.get_payment_type_display }}</td>
+                <td>{{pay.created_at}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+    <div class="card-footer text-muted"></div>
+</div>
+</div>
+{% endblock content %}
